@@ -78,9 +78,9 @@ function Table() {
         />
         <button
           type="submit"
-          className="mt-4 w-full bg-blue-600 text-white py-2 rounded-md"
+          className="cursor-pointer mt-4 w-full bg-blue-600 text-white py-2 rounded-md"
         >
-          {postMutation.isLoading ? "Yuklanmoqda..." : "Post"}
+          post
         </button>
       </form>
       {isLoading && <p>Loading...</p>}
