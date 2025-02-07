@@ -22,7 +22,8 @@ const postApi = async (newPost) => {
 function Table() {
   const queryClient = useQueryClient();
   const [page, setPage] = useState(1);
-  const [data, setData] = useState({ title: "", body: "" });
+  const [title, setTitle] = useState("");
+  const [body, setBody] = useState("");
 
   useEffect(() => {
     AOS.init({ duration: 1000 });
@@ -42,17 +43,19 @@ function Table() {
 
   let save = (e) => {
     e.preventDefault();
-    postMutation.mutate(data);
-    setData({ title: "", body: "" });
+    postMutation.mutate({ title, body });
+    setTitle("");
+    setBody("");
   };
 
-  let pilus = () => {
+  let prevPage = () => {
     if (page > 1) setPage(page - 1);
   };
 
-  let minus = () => {
+  let nextPage = () => {
     setPage(page + 1);
   };
+
   return (
     <div className="container mx-auto w-[1000px] p-5">
       <form
@@ -63,15 +66,15 @@ function Table() {
           type="text"
           className="border w-full p-2 rounded-md"
           placeholder="Title"
-          value={data.title}
-          onChange={(e) => data({ ...data, title: e.target.value })}
+          value={title}
+          onChange={(e) => setTitle(e.target.value)}
         />
         <input
           type="text"
           className="border w-full mt-4 p-2 rounded-md"
           placeholder="Body"
-          value={data.body}
-          onChange={(e) => data({ ...data, body: e.target.value })}
+          value={body}
+          onChange={(e) => setBody(e.target.value)}
         />
         <button
           type="submit"
@@ -94,10 +97,10 @@ function Table() {
         ))}
       </div>
       <div className="mt-5 flex gap-3">
-        <button onClick={pilus} disabled={page === 1}>
+        <button onClick={prevPage} disabled={page === 1}>
           Oldingi
         </button>
-        <button onClick={minus}>Keyingi</button>
+        <button onClick={nextPage}>Keyingi</button>
       </div>
     </div>
   );
